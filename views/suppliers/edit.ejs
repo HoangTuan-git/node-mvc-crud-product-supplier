@@ -1,0 +1,79 @@
+<%- include('../partials/header') %>
+
+<div class="page-header">
+    <h2><i class="bi bi-pencil me-2"></i>Chỉnh sửa nhà cung cấp</h2>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="/suppliers">Nhà cung cấp</a></li>
+            <li class="breadcrumb-item"><a href="/suppliers/<%= supplier._id %>"><%= supplier.name %></a></li>
+            <li class="breadcrumb-item active">Chỉnh sửa</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Thông tin nhà cung cấp</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="/suppliers/<%= supplier._id %>?_method=PUT">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">
+                            Tên nhà cung cấp <span class="required">*</span>
+                        </label>
+                        <input type="text" 
+                               class="form-control" 
+                               id="name" 
+                               name="name" 
+                               value="<%= supplier.name %>"
+                               required
+                               maxlength="100">
+                        <div class="form-text">Tối đa 100 ký tự</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="address" class="form-label">
+                            Địa chỉ <span class="required">*</span>
+                        </label>
+                        <textarea class="form-control" 
+                                  id="address" 
+                                  name="address" 
+                                  rows="3"
+                                  required
+                                  maxlength="200"><%= supplier.address %></textarea>
+                        <div class="form-text">Tối đa 200 ký tự</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">
+                            Số điện thoại <span class="required">*</span>
+                        </label>
+                        <input type="tel" 
+                               class="form-control" 
+                               id="phone" 
+                               name="phone" 
+                               value="<%= supplier.phone %>"
+                               required
+                               pattern="[0-9]{10,11}"
+                               title="Số điện thoại phải có 10-11 chữ số">
+                        <div class="form-text">Nhập 10-11 chữ số (không có khoảng trắng hoặc ký tự đặc biệt)</div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="/suppliers/<%= supplier._id %>" class="btn btn-secondary me-md-2">
+                            <i class="bi bi-arrow-left me-2"></i>Hủy
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-circle me-2"></i>Cập nhật
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

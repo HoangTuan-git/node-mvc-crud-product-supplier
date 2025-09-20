@@ -1,0 +1,177 @@
+<%- include('../partials/header') %>
+
+<div class="page-header">
+    <h2><i class="bi bi-eye me-2"></i>Chi tiết nhà cung cấp</h2>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="/suppliers">Nhà cung cấp</a></li>
+            <li class="breadcrumb-item active"><%= supplier.name %></li>
+        </ol>
+    </nav>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <!-- Thông tin nhà cung cấp -->
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Thông tin nhà cung cấp</h5>
+                <div class="btn-group">
+                    <a href="/suppliers/<%= supplier._id %>/edit" class="btn btn-warning btn-sm">
+                        <i class="bi bi-pencil me-1"></i>Chỉnh sửa
+                    </a>
+                    <form method="POST" action="/suppliers/<%= supplier._id %>?_method=DELETE" 
+                          class="d-inline" 
+                          onsubmit="return confirmDelete('Bạn có chắc chắn muốn xóa nhà cung cấp này?')">
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash me-1"></i>Xóa
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-borderless">
+                    <tbody>
+                        <tr>
+                            <th width="150">Tên:</th>
+                            <td><strong><%= supplier.name %></strong></td>
+                        </tr>
+                        <tr>
+                            <th>Địa chỉ:</th>
+                            <td><%= supplier.address %></td>
+                        </tr>
+                        <tr>
+                            <th>Số điện thoại:</th>
+                            <td>
+                                <i class="bi bi-telephone me-1"></i>
+                                <%= supplier.getFormattedPhone() %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Ngày tạo:</th>
+                            <td>
+                                <small class="text-muted">
+                                    <%= supplier.createdAt.toLocaleDateString('vi-VN') %> 
+                                    lúc <%= supplier.createdAt.toLocaleTimeString('vi-VN') %>
+                                </small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Cập nhật lần cuối:</th>
+                            <td>
+                                <small class="text-muted">
+                                    <%= supplier.updatedAt.toLocaleDateString('vi-VN') %> 
+                                    lúc <%= supplier.updatedAt.toLocaleTimeString('vi-VN') %>
+                                </small>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Danh sách sản phẩm -->
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Sản phẩm của nhà cung cấp</h5>
+                <a href="/products/new" class="btn btn-primary btn-sm">
+                    <i class="bi bi-plus-circle me-1"></i>Thêm sản phẩm
+                </a>
+            </div>
+            <div class="card-body">
+                <% if (products.length === 0) { %>
+                    <div class="text-center py-4">
+                        <i class="bi bi-box display-4 text-muted mb-3"></i>
+                        <p class="text-muted">Chưa có sản phẩm nào từ nhà cung cấp này</p>
+                        <a href="/products/new" class="btn btn-primary">
+                            <i class="bi bi-plus-circle me-2"></i>Thêm sản phẩm đầu tiên
+                        </a>
+                    </div>
+                <% } else { %>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Giá</th>
+                                    <th>Số lượng</th>
+                                    <th>Tổng giá trị</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% products.forEach(product => { %>
+                                    <tr>
+                                        <td><strong><%= product.name %></strong></td>
+                                        <td><%= product.formattedPrice %></td>
+                                        <td><%= product.quantity %></td>
+                                        <td><%= product.formattedTotalValue %></td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <a href="/products/<%= product._id %>" 
+                                                   class="btn btn-outline-info"
+                                                   title="Xem chi tiết">
+                                                    <i class="bi bi-eye"></i>
+                                                </a>
+                                                <a href="/products/<%= product._id %>/edit" 
+                                                   class="btn btn-outline-warning"
+                                                   title="Chỉnh sửa">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <!-- Thống kê -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Thống kê</h5>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-12 mb-3">
+                        <div class="stats-number text-primary"><%= products.length %></div>
+                        <small class="text-muted">Sản phẩm</small>
+                    </div>
+                    <% if (products.length > 0) { %>
+                        <div class="col-12">
+                            <div class="stats-number text-success">
+                                <%= new Intl.NumberFormat('vi-VN', {
+                                    style: 'currency',
+                                    currency: 'VND'
+                                }).format(products.reduce((total, product) => total + product.totalValue, 0)) %>
+                            </div>
+                            <small class="text-muted">Tổng giá trị</small>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nút thao tác -->
+        <div class="card mt-3">
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="/suppliers" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-2"></i>Quay lại danh sách
+                    </a>
+                    <a href="/suppliers/<%= supplier._id %>/edit" class="btn btn-warning">
+                        <i class="bi bi-pencil me-2"></i>Chỉnh sửa
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

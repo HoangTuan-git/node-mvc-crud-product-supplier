@@ -1,0 +1,182 @@
+<%- include('../partials/header') %>
+
+<div class="page-header">
+    <h2><i class="bi bi-eye me-2"></i>Chi tiết sản phẩm</h2>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="/products">Sản phẩm</a></li>
+            <li class="breadcrumb-item active"><%= product.name %></li>
+        </ol>
+    </nav>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <!-- Thông tin sản phẩm -->
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Thông tin sản phẩm</h5>
+                <div class="btn-group">
+                    <a href="/products/<%= product._id %>/edit" class="btn btn-warning btn-sm">
+                        <i class="bi bi-pencil me-1"></i>Chỉnh sửa
+                    </a>
+                    <form method="POST" action="/products/<%= product._id %>?_method=DELETE" 
+                          class="d-inline" 
+                          onsubmit="return confirmDelete('Bạn có chắc chắn muốn xóa sản phẩm này?')">
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash me-1"></i>Xóa
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-borderless">
+                    <tbody>
+                        <tr>
+                            <th width="150">Tên sản phẩm:</th>
+                            <td><strong><%= product.name %></strong></td>
+                        </tr>
+                        <tr>
+                            <th>Nhà cung cấp:</th>
+                            <td>
+                                <% if (product.supplierId) { %>
+                                    <a href="/suppliers/<%= product.supplierId._id %>" 
+                                       class="text-decoration-none">
+                                        <i class="bi bi-building me-1"></i>
+                                        <%= product.supplierId.name %>
+                                    </a>
+                                    <br>
+                                    <small class="text-muted">
+                                        <i class="bi bi-geo-alt me-1"></i>
+                                        <%= product.supplierId.address %>
+                                    </small>
+                                    <br>
+                                    <small class="text-muted">
+                                        <i class="bi bi-telephone me-1"></i>
+                                        <%= product.supplierId.getFormattedPhone() %>
+                                    </small>
+                                <% } else { %>
+                                    <span class="text-muted">Không xác định</span>
+                                <% } %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Giá:</th>
+                            <td><strong class="text-primary"><%= product.formattedPrice %></strong></td>
+                        </tr>
+                        <tr>
+                            <th>Số lượng:</th>
+                            <td>
+                                <span class="badge bg-info fs-6"><%= product.quantity %></span>
+                                <% if (product.quantity === 0) { %>
+                                    <span class="badge bg-danger ms-2">Hết hàng</span>
+                                <% } else if (product.quantity < 10) { %>
+                                    <span class="badge bg-warning ms-2">Sắp hết</span>
+                                <% } %>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Tổng giá trị:</th>
+                            <td><strong class="text-success h5"><%= product.formattedTotalValue %></strong></td>
+                        </tr>
+                        <tr>
+                            <th>Ngày tạo:</th>
+                            <td>
+                                <small class="text-muted">
+                                    <%= product.createdAt.toLocaleDateString('vi-VN') %> 
+                                    lúc <%= product.createdAt.toLocaleTimeString('vi-VN') %>
+                                </small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Cập nhật lần cuối:</th>
+                            <td>
+                                <small class="text-muted">
+                                    <%= product.updatedAt.toLocaleDateString('vi-VN') %> 
+                                    lúc <%= product.updatedAt.toLocaleTimeString('vi-VN') %>
+                                </small>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <!-- Thống kê sản phẩm -->
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5 class="mb-0">Thống kê</h5>
+            </div>
+            <div class="card-body text-center">
+                <div class="row">
+                    <div class="col-12 mb-3">
+                        <div class="stats-number text-primary"><%= product.formattedPrice %></div>
+                        <small class="text-muted">Đơn giá</small>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <div class="stats-number text-info"><%= product.quantity %></div>
+                        <small class="text-muted">Số lượng</small>
+                    </div>
+                    <div class="col-12">
+                        <div class="stats-number text-success" style="font-size: 1.5rem;">
+                            <%= product.formattedTotalValue %>
+                        </div>
+                        <small class="text-muted">Tổng giá trị</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Trạng thái kho -->
+        <div class="card mb-3">
+            <div class="card-header">
+                <h5 class="mb-0">Trạng thái kho</h5>
+            </div>
+            <div class="card-body">
+                <% if (product.quantity === 0) { %>
+                    <div class="alert alert-danger mb-0">
+                        <i class="bi bi-exclamation-triangle me-2"></i>
+                        <strong>Hết hàng</strong>
+                        <p class="mb-0">Sản phẩm đã hết trong kho</p>
+                    </div>
+                <% } else if (product.quantity < 10) { %>
+                    <div class="alert alert-warning mb-0">
+                        <i class="bi bi-exclamation-circle me-2"></i>
+                        <strong>Sắp hết hàng</strong>
+                        <p class="mb-0">Chỉ còn <%= product.quantity %> sản phẩm</p>
+                    </div>
+                <% } else { %>
+                    <div class="alert alert-success mb-0">
+                        <i class="bi bi-check-circle me-2"></i>
+                        <strong>Còn hàng</strong>
+                        <p class="mb-0">Kho có <%= product.quantity %> sản phẩm</p>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+
+        <!-- Nút thao tác -->
+        <div class="card">
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="/products" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-2"></i>Quay lại danh sách
+                    </a>
+                    <a href="/products/<%= product._id %>/edit" class="btn btn-warning">
+                        <i class="bi bi-pencil me-2"></i>Chỉnh sửa
+                    </a>
+                    <% if (product.supplierId) { %>
+                        <a href="/suppliers/<%= product.supplierId._id %>" class="btn btn-info">
+                            <i class="bi bi-building me-2"></i>Xem nhà cung cấp
+                        </a>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

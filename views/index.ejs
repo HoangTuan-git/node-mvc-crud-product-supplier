@@ -1,0 +1,86 @@
+<% const title = 'Trang chủ'; %>
+<%- include('partials/header') %>
+
+<div class="page-header">
+    <h1 class="display-4">
+        <i class="bi bi-house me-3"></i>
+        Chào mừng đến với hệ thống quản lý sản phẩm
+    </h1>
+    <p class="lead">Quản lý nhà cung cấp và sản phẩm một cách hiệu quả</p>
+</div>
+
+<div class="row">
+    <!-- Suppliers Card -->
+    <div class="col-md-6 mb-4">
+        <div class="card stats-card h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-building display-1 mb-3"></i>
+                <h5 class="card-title">Nhà cung cấp</h5>
+                <p class="card-text">Quản lý thông tin các nhà cung cấp</p>
+                <div class="d-grid gap-2">
+                    <a href="/suppliers" class="btn btn-light btn-lg">
+                        <i class="bi bi-eye me-2"></i>Xem danh sách
+                    </a>
+                    <a href="/suppliers/new" class="btn btn-outline-light">
+                        <i class="bi bi-plus-circle me-2"></i>Thêm mới
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Products Card -->
+    <div class="col-md-6 mb-4">
+        <div class="card stats-card h-100" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+            <div class="card-body text-center">
+                <i class="bi bi-box display-1 mb-3"></i>
+                <h5 class="card-title">Sản phẩm</h5>
+                <p class="card-text">Quản lý thông tin các sản phẩm</p>
+                <div class="d-grid gap-2">
+                    <a href="/products" class="btn btn-light btn-lg">
+                        <i class="bi bi-eye me-2"></i>Xem danh sách
+                    </a>
+                    <a href="/products/new" class="btn btn-outline-light">
+                        <i class="bi bi-plus-circle me-2"></i>Thêm mới
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="row mt-5">
+    <div class="col-12">
+        <h3 class="mb-4">Tính năng chính</h3>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-plus-square text-success display-4 mb-3"></i>
+                <h5 class="card-title">Thêm mới</h5>
+                <p class="card-text">Thêm nhà cung cấp và sản phẩm mới vào hệ thống</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-pencil-square text-primary display-4 mb-3"></i>
+                <h5 class="card-title">Chỉnh sửa</h5>
+                <p class="card-text">Cập nhật thông tin nhà cung cấp và sản phẩm</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-trash text-danger display-4 mb-3"></i>
+                <h5 class="card-title">Xóa</h5>
+                <p class="card-text">Xóa nhà cung cấp và sản phẩm khỏi hệ thống</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %>
