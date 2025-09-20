@@ -13,7 +13,7 @@ const supplierRoutes = require('./routes/supplierRoutes');
 const productRoutes = require('./routes/productRoutes');
 
 // Database connection
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/product_supplier_db')
+mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('✅ Kết nối MongoDB thành công'))
     .catch(err => console.error('❌ Lỗi kết nối MongoDB:', err));
 
@@ -46,7 +46,7 @@ app.use((req, res, next) => {
 
 // Routes
 app.get('/', (req, res) => {
-    res.render('index');
+    res.render('index', { title: 'Trang chủ' });
 });
 
 app.use('/suppliers', supplierRoutes);
@@ -54,12 +54,12 @@ app.use('/products', productRoutes);
 
 // Error handling middleware
 app.use((req, res, next) => {
-    res.status(404).render('404');
+    res.status(404).render('404', { title: 'Không tìm thấy trang' });
 });
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
-    res.status(500).render('500');
+    res.status(500).render('500', { title: 'Lỗi hệ thống' });
 });
 
 const PORT = process.env.PORT || 3000;
