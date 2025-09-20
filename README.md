@@ -1,42 +1,43 @@
-# Ứng dụng Quản lý Sản phẩm và Nhà cung cấp
+# Product and Supplier Management System
 
-Ứng dụng web CRUD được xây dựng với Node.js, MongoDB, Mongoose theo kiến trúc MVC và sử dụng Bootstrap để tối ưu giao diện.
+A CRUD web application built with Node.js, MongoDB, Mongoose following MVC architecture and Bootstrap for optimized user interface.
 
-## 📋 Tính năng
+## 📋 Features
 
-### Quản lý Nhà cung cấp
-- ✅ Xem danh sách nhà cung cấp
-- ✅ Thêm nhà cung cấp mới
-- ✅ Xem chi tiết nhà cung cấp
-- ✅ Chỉnh sửa thông tin nhà cung cấp
-- ✅ Xóa nhà cung cấp (với kiểm tra ràng buộc)
+### Supplier Management
+- ✅ View supplier list
+- ✅ Add new suppliers
+- ✅ View supplier details
+- ✅ Edit supplier information
+- ✅ Delete suppliers (with constraint checking)
 
-### Quản lý Sản phẩm
-- ✅ Xem danh sách sản phẩm
-- ✅ Thêm sản phẩm mới
-- ✅ Xem chi tiết sản phẩm
-- ✅ Chỉnh sửa thông tin sản phẩm
-- ✅ Xóa sản phẩm
+### Product Management
+- ✅ View product list
+- ✅ Add new products
+- ✅ View product details
+- ✅ Edit product information
+- ✅ Delete products
 
-### Tính năng bổ sung
-- 📱 Giao diện responsive với Bootstrap 5
-- 💸 Tính toán tự động tổng giá trị sản phẩm
-- 📊 Thống kê và báo cáo
-- 🔔 Thông báo trạng thái kho hàng
-- ✅ Validate dữ liệu đầu vào
-- 💾 Flash messages cho feedback
+### Additional Features
+- 📱 Responsive interface with Bootstrap 5
+- 💸 Automatic total product value calculation
+- 📊 Statistics and reporting
+- 🔔 Inventory status notifications
+- ✅ Input data validation
+- 💾 Flash messages for feedback
 
-## 🛠 Công nghệ sử dụng
+## 🛠 Technologies Used
 
 - **Backend**: Node.js, Express.js
 - **Database**: MongoDB, Mongoose ODM
 - **Template Engine**: EJS
 - **Frontend**: Bootstrap 5, Bootstrap Icons
-- **Kiến trúc**: MVC (Model-View-Controller)
+- **Architecture**: MVC (Model-View-Controller)
 
-## 📊 Cơ sở dữ liệu
+## 📊 Database Schema
 
-### Model Supplier (Nhà cung cấp)
+### Supplier Model
+### Supplier Model
 ```javascript
 {
   name: String (required, max 100 chars),
@@ -47,7 +48,7 @@
 }
 ```
 
-### Model Product (Sản phẩm)
+### Product Model
 ```javascript
 {
   name: String (required, max 100 chars),
@@ -59,37 +60,37 @@
 }
 ```
 
-## 🚀 Cài đặt và chạy ứng dụng
+## 🚀 Installation and Setup
 
-### Yêu cầu hệ thống
-- Node.js (version 14 trở lên)
-- MongoDB (đang chạy tại localhost:27017)
-- npm hoặc yarn
+### System Requirements
+- Node.js (version 14 or higher)
+- MongoDB (running on localhost:27017)
+- npm or yarn
 
-### Bước 1: Clone dự án
+### Step 1: Clone the project
 ```bash
-cd Phan1
+cd node-mvc-crud-product-supplier
 ```
 
-### Bước 2: Cài đặt dependencies
+### Step 2: Install dependencies
 ```bash
 npm install
 ```
 
-### Bước 3: Cấu hình môi trường
-Tạo file `.env` hoặc sử dụng file có sẵn:
+### Step 3: Environment configuration
+Create a `.env` file or use the existing one:
 ```
 MONGO_URI=mongodb://localhost:27017/product_supplier_db
 PORT=3000
 SESSION_SECRET=your_secret_key_here
 ```
 
-### Bước 4: Khởi tạo dữ liệu mẫu (tùy chọn)
+### Step 4: Initialize sample data (optional)
 ```bash
 npm run seed
 ```
 
-### Bước 5: Chạy ứng dụng
+### Step 5: Run the application
 ```bash
 # Development mode
 npm run dev
@@ -98,13 +99,13 @@ npm run dev
 npm start
 ```
 
-### Bước 6: Truy cập ứng dụng
-Mở trình duyệt và truy cập: http://localhost:3000
+### Step 6: Access the application
+Open your browser and visit: http://localhost:3000
 
-## 📁 Cấu trúc dự án
+## 📁 Project Structure
 
 ```
-Phan1/
+node-mvc-crud-product-supplier/
 ├── controllers/           # Controllers (MVC)
 │   ├── supplierController.js
 │   └── productController.js
@@ -141,61 +142,61 @@ Phan1/
 └── README.md
 ```
 
-## 🎯 Endpoints API
+## 🎯 API Endpoints
 
-### Nhà cung cấp
-- `GET /suppliers` - Danh sách nhà cung cấp
-- `GET /suppliers/new` - Form thêm nhà cung cấp
-- `POST /suppliers` - Tạo nhà cung cấp mới
-- `GET /suppliers/:id` - Chi tiết nhà cung cấp
-- `GET /suppliers/:id/edit` - Form sửa nhà cung cấp
-- `PUT /suppliers/:id` - Cập nhật nhà cung cấp
-- `DELETE /suppliers/:id` - Xóa nhà cung cấp
+### Suppliers
+- `GET /suppliers` - Get supplier list
+- `GET /suppliers/new` - Show add supplier form
+- `POST /suppliers` - Create new supplier
+- `GET /suppliers/:id` - Get supplier details
+- `GET /suppliers/:id/edit` - Show edit supplier form
+- `PUT /suppliers/:id` - Update supplier
+- `DELETE /suppliers/:id` - Delete supplier
 
-### Sản phẩm
-- `GET /products` - Danh sách sản phẩm
-- `GET /products/new` - Form thêm sản phẩm
-- `POST /products` - Tạo sản phẩm mới
-- `GET /products/:id` - Chi tiết sản phẩm
-- `GET /products/:id/edit` - Form sửa sản phẩm
-- `PUT /products/:id` - Cập nhật sản phẩm
-- `DELETE /products/:id` - Xóa sản phẩm
+### Products
+- `GET /products` - Get product list
+- `GET /products/new` - Show add product form
+- `POST /products` - Create new product
+- `GET /products/:id` - Get product details
+- `GET /products/:id/edit` - Show edit product form
+- `PUT /products/:id` - Update product
+- `DELETE /products/:id` - Delete product
 
-## 🔍 Validation và Error Handling
+## 🔍 Validation and Error Handling
 
-### Validation
-- Tên nhà cung cấp/sản phẩm: Bắt buộc, tối đa 100 ký tự
-- Địa chỉ: Bắt buộc, tối đa 200 ký tự
-- Số điện thoại: Bắt buộc, 10-11 chữ số
-- Giá sản phẩm: Bắt buộc, phải >= 0
-- Số lượng: Bắt buộc, phải >= 0, số nguyên
+### Validation Rules
+- Supplier/Product name: Required, max 100 characters
+- Address: Required, max 200 characters
+- Phone number: Required, 10-11 digits
+- Product price: Required, must be >= 0
+- Quantity: Required, must be >= 0, integer value
 
 ### Error Handling
-- 404: Trang không tìm thấy
-- 500: Lỗi server
-- Flash messages cho thông báo thành công/lỗi
+- 404: Page not found
+- 500: Server error
+- Flash messages for success/error notifications
 
-## 💡 Tính năng nổi bật
+## 💡 Key Features
 
-1. **Responsive Design**: Giao diện tối ưu cho mọi thiết bị
-2. **Real-time Calculation**: Tính toán tự động tổng giá trị sản phẩm
-3. **Smart Validation**: Validate dữ liệu ở cả client và server
-4. **Stock Status**: Hiển thị trạng thái kho hàng (hết hàng, sắp hết, còn hàng)
-5. **Relationship Management**: Quản lý mối quan hệ giữa sản phẩm và nhà cung cấp
-6. **Safe Delete**: Kiểm tra ràng buộc trước khi xóa nhà cung cấp
+1. **Responsive Design**: Optimized interface for all devices
+2. **Real-time Calculation**: Automatic total product value calculation
+3. **Smart Validation**: Data validation on both client and server side
+4. **Stock Status**: Display inventory status (out of stock, low stock, in stock)
+5. **Relationship Management**: Manage relationships between products and suppliers
+6. **Safe Delete**: Constraint checking before deleting suppliers
 
-## 🤝 Đóng góp
+## 🤝 Contributing
 
-1. Fork dự án
-2. Tạo branch mới (`git checkout -b feature/AmazingFeature`)
-3. Commit thay đổi (`git commit -m 'Add some AmazingFeature'`)
-4. Push lên branch (`git push origin feature/AmazingFeature`)
-5. Tạo Pull Request
+1. Fork the project
+2. Create a new branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Create a Pull Request
 
 ## 📝 License
 
-Dự án này được phát hành dưới giấy phép MIT. Xem file `LICENSE` để biết thêm chi tiết.
+This project is released under the MIT License. See the `LICENSE` file for more details.
 
-## 👨‍💻 Tác giả
+## 👨‍💻 Author
 
-Được phát triển với ❤️ sử dụng Node.js, MongoDB và Bootstrap.
+Developed with ❤️ using Node.js, MongoDB and Bootstrap.
